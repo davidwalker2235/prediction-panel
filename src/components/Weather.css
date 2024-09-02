@@ -1,0 +1,10 @@
+.daniel-szulc-weather-widget {
+    height: 300px;
+}
+.weather-icon {
+    height: 30% !important;
+}
+
+.current-weather {
+    height: 32% !important;
+}
