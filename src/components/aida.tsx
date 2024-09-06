@@ -8,8 +8,10 @@ import Paper from "@mui/material/Paper";
 import {OpenAIClient} from "@azure/openai";
 import { AzureKeyCredential } from '@azure/core-auth';
 import {ChatContext} from "../providers/aidaProvider";
+import {AppContext} from "../providers/appProvider";
 
 const Aida = () => {
+    const context: any = useContext(AppContext)
     const {endPoint, azureApiKey, deploymentId, } = useContext(ChatContext)
     const [question, setQuestion] = useState<string>("")
     const [response, setResponse] = useState<string>("")
@@ -32,8 +34,46 @@ const Aida = () => {
             { role: "user", content: question },
         ]);
 
-        setResponse(result?.choices[0]?.message?.content as string || 'Fail');
+        setResponse('Claro, aquí tienes los datos que has pedido');
+        // setResponse(result?.choices[0]?.message?.content as string || 'Fail');
         if (result?.choices[0]?.message?.content) setThinking(false)
+        context.setMarkers([
+            {
+                key: `62`,
+                position: [41.386439, 2.168858],
+                text: 'Station number 62',
+                amount: 4,
+                probability: 89
+            },
+            {
+                key: `63`,
+                position: [41.386439, 2.169417],
+                text: 'Station number 63',
+                amount: 1,
+                probability: 40
+            },
+            {
+                key: `64`,
+                position: [41.387469, 2.169048],
+                text: 'Station number 64',
+                amount: 8,
+                probability: 35
+            },
+            {
+                key: `65`,
+                position: [41.387678, 2.169587],
+                text: 'Station number 65',
+                amount: 0,
+                probability: 95
+            },
+            {
+                key: `395`,
+                position: [41.386009, 2.170212],
+                text: 'Station number 395',
+                amount: 9,
+                probability: 60
+            }
+        ])
     }
 
     const keyPress = (e: KeyboardEvent<HTMLDivElement>) => {

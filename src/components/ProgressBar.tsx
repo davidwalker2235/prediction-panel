@@ -26,8 +26,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function ProgressBar() {
+export default function ProgressBar({value}: {value: number}) {
   return (
-    <BorderLinearProgress variant="determinate" value={50} />
+    <BorderLinearProgress variant="determinate" value={value} />
   );
 }

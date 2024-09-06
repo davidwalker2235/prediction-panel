@@ -7,38 +7,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ProgressBar from "../components/ProgressBar";
+import {useContext} from "react";
+import {AppContext} from "../providers/appProvider";
+import {MarkerType} from "@/types/globalTypes";
 
 function createData(
-  name: string,
-  calories: number
+  key: string,
+  probability: number,
+  amount: number
 ) {
-  return { name, calories};
+  return { key, probability, amount};
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-];
-
 export default function BicingList() {
+  const context: any = useContext(AppContext)
+  const createRows = () => {
+    if (!!context?.markers) {
+      return context.markers.map((marker: MarkerType) => createData(marker.key, marker.probability as number, marker.amount as number))
+    }
+    return []
+  }
   return (
     <TableContainer
       component={Paper}
@@ -52,13 +40,15 @@ export default function BicingList() {
         <TableHead>
           <TableRow>
             <TableCell>Location</TableCell>
+            <TableCell>Amount</TableCell>
             <TableCell align="right">Probability</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, i) => (
+          {createRows().map((row: MarkerType, i: number) => (
             <TableRow
-              key={`${row.name}-${i}`}
+              onClick={() => console.log(`clicked id: ${row.key}`)}
+              key={`${row.key}-${i}`}
               sx={{
                 width: '100%',
                 maxWidth: 360,
@@ -71,10 +61,13 @@ export default function BicingList() {
               }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {`Station Number: ${row.key}`}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {row.amount}
               </TableCell>
               <TableCell align="right">
-                <ProgressBar />
+                <ProgressBar value={row?.probability as number || 0}/>
               </TableCell>
             </TableRow>
           ))}
