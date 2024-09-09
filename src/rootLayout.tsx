@@ -5,10 +5,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import DrawerAppBar from "./components/drawerAppBar";
 import {AppProvider} from "./providers/appProvider";
-import Grid from "@mui/material/Grid";
 import App from "./App";
 import AidaProvider from "./providers/aidaProvider";
-// import {AidaProvider} from "aida-chatbot";
 import React from "react";
 
 const darkTheme = createTheme({

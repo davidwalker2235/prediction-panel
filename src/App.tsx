@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@mui/material/Grid";
 import MapCard from "./layouts/mapCard";
-import LineChartCard from "./layouts/lineChartCard";
+import BicingListCard from "./layouts/bicingListCard";
 import BarChartCard from "./layouts/barChartCard";
 import WeatherCard from "./layouts/weatherCard";
 
@@ -12,7 +12,7 @@ function App() {
           <MapCard />
         </Grid>
         <Grid item xs={4} md={4} lg={4}>
-          <LineChartCard />
+          <BicingListCard />
         </Grid>
         <Grid item xs={6} md={6} lg={6}>
           <BarChartCard />

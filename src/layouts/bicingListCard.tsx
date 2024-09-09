@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import MultiActionAreaCard from "../components/card";
 import BicingList from "../components/BicingList";
 
-const LineChartCard = () => {
+const BicingListCard = () => {
     return (
         <Paper elevation={6}>
             <MultiActionAreaCard title="Line Chart" text="">
@@ -16,4 +16,4 @@ const LineChartCard = () => {
     );
 }
 
-export default LineChartCard
+export default BicingListCard

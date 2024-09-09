@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
+import {useContext, useEffect, useState} from "react";
+import {AppContext} from "../../providers/appProvider";
+import {generateRandomArrays} from "../../utils/utils";
 
 const xLabels = [
   '00h',
@@ -29,27 +32,12 @@ const xLabels = [
 ];
 
 export default function StackedBarChart() {
-  const generateRandomArrays = () => {
-    const arrayLength = 24;
-    const targetSum = 30;
-    const minSum = targetSum * 0.8; // 80% del total
+  const {locationSelected}: any = useContext(AppContext)
+  const [data, setData] = useState([[0],[0],[0]])
+  useEffect(() => {
+    if (!!locationSelected) setData(generateRandomArrays())
+  }, [locationSelected])
 
-    let a = new Array(arrayLength);
-    let b = new Array(arrayLength);
-    let c = new Array(arrayLength);
-
-    for (let i = 0; i < arrayLength; i++) {
-      a[i] = Math.floor(Math.random() * targetSum);
-      let minB = Math.max(0, minSum - a[i]);
-      b[i] = Math.floor(Math.random() * (targetSum - a[i] - minB + 1)) + minB;
-
-      c[i] = targetSum - a[i] - b[i];
-    }
-
-    return [a, b, c];
-  }
-
-  const data = generateRandomArrays();
 
   return (
     <BarChart

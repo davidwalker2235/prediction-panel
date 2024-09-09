@@ -28,52 +28,59 @@ const Aida = () => {
     }
 
     const client = new OpenAIClient(endPoint, new AzureKeyCredential(azureApiKey));
-
-    const getResponse = async () => {
-        const result = await client.getChatCompletions(deploymentId, [
-            { role: "user", content: question },
-        ]);
-
+    const handleResponse = (result: any) => {
         setResponse('Claro, aquí tienes los datos que has pedido');
         // setResponse(result?.choices[0]?.message?.content as string || 'Fail');
         if (result?.choices[0]?.message?.content) setThinking(false)
         context.setMarkers([
             {
-                key: `62`,
+                markerKey: `62`,
                 position: [41.386439, 2.168858],
                 text: 'Station number 62',
                 amount: 4,
                 probability: 89
             },
             {
-                key: `63`,
+                markerKey: `63`,
                 position: [41.386439, 2.169417],
                 text: 'Station number 63',
                 amount: 1,
                 probability: 40
             },
             {
-                key: `64`,
+                markerKey: `64`,
                 position: [41.387469, 2.169048],
                 text: 'Station number 64',
                 amount: 8,
                 probability: 35
             },
             {
-                key: `65`,
+                markerKey: `65`,
                 position: [41.387678, 2.169587],
                 text: 'Station number 65',
                 amount: 0,
                 probability: 95
             },
             {
-                key: `395`,
+                markerKey: `395`,
                 position: [41.386009, 2.170212],
                 text: 'Station number 395',
                 amount: 9,
                 probability: 60
             }
         ])
+    }
+
+    const getResponse = async () => {
+        try {
+            const result = await client.getChatCompletions(deploymentId, [
+                { role: "user", content: question },
+            ]);
+            handleResponse(result)
+        } catch (error) {
+            setThinking(false)
+            handleResponse(undefined)
+        }
     }
 
     const keyPress = (e: KeyboardEvent<HTMLDivElement>) => {

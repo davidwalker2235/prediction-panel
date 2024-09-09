@@ -9,24 +9,37 @@ import Paper from '@mui/material/Paper';
 import ProgressBar from "../components/ProgressBar";
 import {useContext} from "react";
 import {AppContext} from "../providers/appProvider";
-import {MarkerType} from "@/types/globalTypes";
+import {MarkerType} from "../types/globalTypes";
+import {findStationByKey, isTheSameMarker} from "../utils/utils";
 
 function createData(
-  key: string,
+  markerKey: string,
   probability: number,
-  amount: number
+  amount: number,
+  isSelected: boolean
 ) {
-  return { key, probability, amount};
+  return { markerKey, probability, amount, isSelected};
 }
 
 export default function BicingList() {
-  const context: any = useContext(AppContext)
+  const {markers, locationSelected, setLocationSelected}: any = useContext(AppContext)
   const createRows = () => {
-    if (!!context?.markers) {
-      return context.markers.map((marker: MarkerType) => createData(marker.key, marker.probability as number, marker.amount as number))
+    if (!!markers) {
+      return markers.map((marker: MarkerType) => createData(
+        marker.markerKey,
+        marker.probability as number,
+        marker.amount as number,
+        isTheSameMarker(marker, locationSelected)
+        ))
     }
     return []
   }
+  const onClickRow = (row: any) => {
+    const marker = findStationByKey(markers, row.markerKey);
+    setLocationSelected(marker);
+  }
+
+
   return (
     <TableContainer
       component={Paper}
@@ -45,14 +58,14 @@ export default function BicingList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {createRows().map((row: MarkerType, i: number) => (
+          {createRows().map((row: any, i: number) => (
             <TableRow
-              onClick={() => console.log(`clicked id: ${row.key}`)}
+              onClick={() => onClickRow(row)}
               key={`${row.key}-${i}`}
               sx={{
                 width: '100%',
                 maxWidth: 360,
-                bgcolor: 'background.paper',
+                bgcolor: (row.isSelected) ? 'red' : 'background.paper',
                 position: 'relative',
                 overflow: 'auto',
                 maxHeight: 400,
@@ -61,7 +74,7 @@ export default function BicingList() {
               }}
             >
               <TableCell component="th" scope="row">
-                {`Station Number: ${row.key}`}
+                {`Station Number: ${row.markerKey}`}
               </TableCell>
               <TableCell component="th" scope="row">
                 {row.amount}

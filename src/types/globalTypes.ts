@@ -1,5 +1,5 @@
 export type MarkerType =  {
-  key: string;
+  markerKey: string;
   position: [number, number];
   text: string;
   amount?: number,

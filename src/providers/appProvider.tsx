@@ -1,7 +1,7 @@
 "use client";
 
 import React, {createContext, useState} from 'react';
-import {MarkersType} from "@/types/globalTypes";
+import {MarkersType, MarkerType} from "@/types/globalTypes";
 
 export const AppContext = createContext(null);
 export const AppProvider = ({children}: {
@@ -9,7 +9,7 @@ export const AppProvider = ({children}: {
 }) => {
     const [isLoading, setIsLoad] = useState<boolean>(false)
     const [locationSelected, setLocationSelected] =
-        useState<{ lat: number, lng: number } | null>(null)
+        useState<MarkerType | null>(null)
     const [markers, setMarkers] = useState<MarkersType>([])
 
     const setIsLoading = (value: any) => {

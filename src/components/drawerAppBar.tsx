@@ -4,6 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import erniLogo from '../images/ERNI_logo_color.png';
 import Aida from "./aida";
+import React from "react";
 // import {Aida} from 'aida-chatbot'
 
 export default function ButtonAppBar() {
@@ -20,7 +21,7 @@ export default function ButtonAppBar() {
                     <img src={erniLogo}
                          width={70}
                          height={50}
-                         alt="Picture of the author"
+                         alt="author"
                     />
                     <Typography
                         fontFamily="arial"
